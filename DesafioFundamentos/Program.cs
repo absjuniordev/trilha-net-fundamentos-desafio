@@ -1,59 +1,44 @@
-﻿using DesafioFundamentos.Models;
+﻿using estacionamento.src.Models;
+using System.Runtime.InteropServices;
 
-// Coloca o encoding para UTF8 para exibir acentuação
-Console.OutputEncoding = System.Text.Encoding.UTF8;
+internal class Program {
+    private static void Main(string[] args) {
+    List<string> veicluos = new List<string>();
+    int opcao;
+    InteraçõesIMPL interações = new InteraçõesIMPL();
 
-decimal precoInicial = 0;
-decimal precoPorHora = 0;
-
-Console.WriteLine("Seja bem vindo ao sistema de estacionamento!\n" +
-                  "Digite o preço inicial:");
-precoInicial = Convert.ToDecimal(Console.ReadLine());
-
-Console.WriteLine("Agora digite o preço por hora:");
-precoPorHora = Convert.ToDecimal(Console.ReadLine());
-
-// Instancia a classe Estacionamento, já com os valores obtidos anteriormente
-Estacionamento es = new Estacionamento(precoInicial, precoPorHora);
-
-string opcao = string.Empty;
-bool exibirMenu = true;
-
-// Realiza o loop do menu
-while (exibirMenu)
-{
+    Console.WriteLine("Sejam bem vindo ao sitema de estacionamento");
+    Console.Write("Digite o valor inicial: ");
+    double valorInicial = double.Parse(Console.ReadLine()!);
+    Console.Write("Digite o valor por hora: ");
+    double valorHora = double.Parse(Console.ReadLine()!);
     Console.Clear();
-    Console.WriteLine("Digite a sua opção:");
-    Console.WriteLine("1 - Cadastrar veículo");
-    Console.WriteLine("2 - Remover veículo");
-    Console.WriteLine("3 - Listar veículos");
-    Console.WriteLine("4 - Encerrar");
 
-    switch (Console.ReadLine())
-    {
-        case "1":
-            es.AdicionarVeiculo();
+    do {
+
+    interações.Apresentacao();
+    opcao = int.Parse(Console.ReadLine()!);
+    Console.Clear();
+
+    switch (opcao) {
+        case 1:
+            interações.Cadastro(veicluos);
+            Console.Clear();
             break;
 
-        case "2":
-            es.RemoverVeiculo();
+        case 2:
+            interações.RemoverCadastro(veicluos,valorInicial, valorHora);
+            Console.Clear();
             break;
+        case 3:
+            interações.ListarCadastros(veicluos);
+            Console.Clear();
+            break;
+        }
+        } while (opcao != 4);
 
-        case "3":
-            es.ListarVeiculos();
-            break;
+    Console.WriteLine("Saindo...");
+        }
 
-        case "4":
-            exibirMenu = false;
-            break;
 
-        default:
-            Console.WriteLine("Opção inválida");
-            break;
     }
-
-    Console.WriteLine("Pressione uma tecla para continuar");
-    Console.ReadLine();
-}
-
-Console.WriteLine("O programa se encerrou");
